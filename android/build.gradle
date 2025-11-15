@@ -1,0 +1,31 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Provide Flutter-like configuration for plugins that still expect
+// the old 'flutter' Gradle extension (compatibility shim).
+ext {
+    if (!hasProperty('flutter')) {
+        flutter = [
+            compileSdkVersion: 34,
+            targetSdkVersion: 34,
+            minSdkVersion   : 21,
+            ndkVersion      : null
+        ]
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
